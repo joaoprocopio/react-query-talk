@@ -1,3 +1,3 @@
-export default function Test() {
-  return <div>hello world from exemplo 1</div>
+export default function Exemplo1() {
+  return <div>exemplo 1</div>
 }
