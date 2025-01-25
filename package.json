@@ -1,5 +1,4 @@
 {
-  "name": "react-query-talk",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,6 +28,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "postcss": "^8.4.49",

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url"
 
 import { includeIgnoreFile } from "@eslint/compat"
 import eslint from "@eslint/js"
+import node from "eslint-plugin-n"
 import prettier from "eslint-plugin-prettier/recommended"
 import sort from "eslint-plugin-simple-import-sort"
 import tseslint from "typescript-eslint"
@@ -16,7 +17,6 @@ const config = tseslint.config(
   includeIgnoreFile(gitignorePath),
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  prettier,
   {
     plugins: {
       "simple-import-sort": sort,
@@ -26,6 +26,19 @@ const config = tseslint.config(
       "simple-import-sort/exports": "error",
     },
   },
+  {
+    ...node.configs["flat/recommended-script"],
+    files: ["mock/**/*.js"],
+    languageOptions: {
+      ...node.configs["flat/recommended-script"].languageOptions,
+      ecmaVersion: "latest",
+    },
+    rules: {
+      ...node.configs["flat/recommended-script"].rules,
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+  prettier,
 )
 
 export default config
