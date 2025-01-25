@@ -2,8 +2,8 @@ import { Link, Outlet } from "react-router"
 
 const exampleLinks = [
   {
-    to: "/exemplo-1",
-    label: "Exemplo 1",
+    to: "/example-1",
+    label: "Example 1",
   },
 ]
 
