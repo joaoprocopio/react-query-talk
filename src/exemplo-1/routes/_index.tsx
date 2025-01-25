@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
 
+import * as FrogServices from "~/exemplo-1/services/frog"
+
 export default function Exemplo1() {
-  const [frog, setFrog] = useState(undefined)
+  const [frog, setFrog] = useState<FrogServices.Frog | undefined>(undefined)
 
   useEffect(() => {
     const handleFetchRandomFrog = async () => {
       setFrog(undefined)
 
-      const res = await fetch("https://frogs.media/api/random")
-      const json = await res.json()
+      const frog = await FrogServices.getRandomFrog()
 
-      setFrog(json)
+      setFrog(frog)
     }
 
     handleFetchRandomFrog()
