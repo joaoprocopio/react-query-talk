@@ -4,7 +4,7 @@ import { flatRoutes } from "@react-router/fs-routes"
 
 const getPrefixedRoutes = async (modulePrefix: string) => {
   const routes = await flatRoutes({
-    rootDirectory: `./modules/${modulePrefix}/routes`,
+    rootDirectory: `./${modulePrefix}/routes`,
   })
 
   return prefix(modulePrefix, routes)
