@@ -4,6 +4,9 @@
   "engines": {
     "node": ">=20.9"
   },
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
   "dependencies": {
     "@koa/router": "^13.1.0",
     "koa": "^2.15.3",
