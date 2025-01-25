@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 
-import * as FrogServices from "~/exemplo-1/services/frog"
+import * as FrogServices from "~/services/frog"
 
 export default function Exemplo1() {
   const [frog, setFrog] = useState<FrogServices.Frog | undefined>(undefined)
