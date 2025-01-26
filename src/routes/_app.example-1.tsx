@@ -16,8 +16,10 @@ import * as FrogServices from "~/services/frog"
   Vendo esse código já podemos reparar em dois problemas existentes:
   - tela de loading infinito.
     caso aconteça algum erro na api, vai ficar um estado de loading infinito.
+
   - cumulative layout shift.
-    pouca estabilidade visual — toda vez que ocorre uma troca de sapo, os elementos:
+    falta rastrear o estado de loading e por isso temos pouca estabilidade visual.
+    toda vez que ocorre uma troca de sapo, os elementos:
     - somem
     - se reposicionam
     - reaparecem
@@ -54,7 +56,7 @@ export default function Example1() {
         {Array.isArray(frog?.aliases) && (
           <ul className="list-inside list-disc">
             {frog.aliases.map((alias) => (
-              <li>{alias}</li>
+              <li key={alias}>{alias}</li>
             ))}
           </ul>
         )}

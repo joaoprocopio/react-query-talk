@@ -5,7 +5,11 @@ const exampleLinks = [
     to: "/example-1",
     label: "Example 1",
   },
-]
+  {
+    to: "/example-2",
+    label: "Example 2",
+  },
+] satisfies { to: string; label: string }[]
 
 export default function Home() {
   return (
