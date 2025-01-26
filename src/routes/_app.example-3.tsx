@@ -99,39 +99,55 @@ export default function Example3() {
   )
 }
 
+/* Espaçamento anti-cheat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fim do anti-cheat */
+
 /*
-  Espaçamento anti-cheat
+  Resposta:
 
+  Como o fetch executa uma requisição assíncrona, não temos ideia alguma do tempo que vai ser necessário para resolvê-la.
+  É totalmente possível enquanto tiver uma requisição em andamento, o usuário clique no botão, o que vai desencadear:
+  - Uma re-renderização
+  - Faz com que o fetch rode novamente
 
+  E nesse cenário, agora nós temos duas requisições acontecendo, procurando por recursos diferentes.
+  E ainda pior, não sabemos nem quem vai responder primeiro.
+  Em ambos estários nós estamos chamando o `setFrog` quando a requisição resolve.
 
+  Isso significa que nós nào vamos saber em que ordem eles vão resolver.
+  E nada disso importa por que no fim só importa a última requisição de resolver.
 
+  Por fim, o que nós temos tem um nome: *race condition*.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  Fim do anti-cheat
-*/
-
-/*
-
+  Para visualizar isso, é só clicar várias vezes no botão e abrir o DevTools do Chrome.
+  Muitas requisições vão ser disparadas, e a tela vai atualizar todas as vezes causando re-renderizações inúteis.
 */
