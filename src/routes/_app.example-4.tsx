@@ -18,7 +18,11 @@ async function getRandomFrog({ signal }: { signal?: AbortSignal }): Promise<Frog
   return frog as Frog
 }
 
+// Como o React Query executa tudo usando o queryClient, é necessário que ele esteja no topo da hierarquia dos seus componentes, confira: `entry.client.tsx`.
 export default function Example4() {
+  // As únicas duas coisas obrigatórias são: queryKey e queryFn.
+  // queryKey é a chave do cache.
+  // queryFn é a rotina executada, que *deve* retornar uma promise.
   const frogQuery = useQuery({
     queryKey: ["frog"],
     queryFn: (args) => getRandomFrog({ signal: args.signal }),
@@ -29,7 +33,9 @@ export default function Example4() {
       <h1 className="mb-4 h-9 w-full text-3xl font-bold">{frogQuery.data?.name}</h1>
 
       <div className="mb-8 flex gap-8">
-        {frogQuery.isSuccess ? (
+        {frogQuery.isLoading || frogQuery.isRefetching ? (
+          <div className="h-[var(--frog-height)] w-[var(--frog-width)] animate-pulse rounded-md bg-neutral-100" />
+        ) : (
           <figure>
             <img
               src={frogQuery.data?.url}
@@ -43,8 +49,6 @@ export default function Example4() {
               </figcaption>
             )}
           </figure>
-        ) : (
-          <div className="h-[var(--frog-height)] w-[var(--frog-width)] animate-pulse rounded-md bg-neutral-100" />
         )}
 
         {Array.isArray(frogQuery.data?.aliases) && (
