@@ -5,27 +5,6 @@ import * as FrogServices from "~/services/frog"
 /*
   O mais próximo que a gente consegue chegar de consumir dados da API utilizando os hooks built-in do React
   é usando `useEffect` para realizar a chamada, e guardar os dados em um `useState`.
-
-  Provalvemnente você já viu e/ou escreveu muito código assim.
-  Mas o problema aqui é que isso é código "nível-tutorial".
-
-  E nós não deveríamos jogar código de "nível-tutorial" para produção.
-*/
-
-/*
-  Vendo esse código já podemos reparar em dois problemas existentes:
-  - tela de loading infinito.
-    caso aconteça algum erro na api, vai ficar um estado de loading infinito.
-
-  - cumulative layout shift.
-    falta rastrear o estado de loading e por isso temos pouca estabilidade visual.
-    toda vez que ocorre uma troca de sapo, os elementos:
-    - somem
-    - se reposicionam
-    - reaparecem
-    - e se reposicionam mais uma vez
-
-  Esses problemas ficam mais claros, se fazer um trottle na rede e desabilitar o cache.
 */
 
 export default function Example1() {
@@ -70,3 +49,26 @@ export default function Example1() {
     </div>
   )
 }
+
+/*
+  Provalvemente você já viu e/ou escreveu muito código assim.
+  Mas o problema aqui é que isso é código "nível-tutorial".
+
+  E nós não deveríamos jogar código de "nível-tutorial" para produção.
+*/
+
+/*
+  Vendo esse código já podemos reparar em dois problemas existentes:
+  - tela de loading infinito.
+    caso aconteça algum erro na api, vai ficar um estado de loading infinito.
+
+  - cumulative layout shift.
+    falta rastrear o estado de loading e por isso temos pouca estabilidade visual.
+    toda vez que ocorre uma troca de sapo, os elementos:
+    - somem
+    - se reposicionam
+    - reaparecem
+    - e se reposicionam mais uma vez
+
+  Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
+*/
