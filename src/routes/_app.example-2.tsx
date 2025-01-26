@@ -23,7 +23,6 @@ export default function Example2() {
   useEffect(() => {
     handleFetchRandomFrog()
   }, [])
-  console.log(loading)
 
   return (
     <div style={{ "--frog-width": "24rem", "--frog-height": "28rem" } as React.CSSProperties}>
@@ -33,7 +32,7 @@ export default function Example2() {
         {!loading ? (
           <img
             src={frog?.url}
-            className="h-[var(--frog-height)] w-[var(--frog-width)] overflow-hidden rounded-md bg-fuchsia-400 object-center"
+            className="h-[var(--frog-height)] w-[var(--frog-width)] overflow-hidden rounded-md object-center"
           />
         ) : (
           <div className="h-[var(--frog-height)] w-[var(--frog-width)] animate-pulse rounded-md bg-neutral-100" />
