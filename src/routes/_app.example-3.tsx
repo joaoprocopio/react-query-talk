@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useState } from "react"
 
+/*
+  Agora dentro desse exemplo estamos rastreando os estados mais básicos dos dados da API — loading, erro e sucesso.
+
+  Já que nós sincronizamos o estado que representa o sapo
+*/
+
 interface Frog {
   name: string
   url: string
   aliases?: string[]
 }
 
-export default function Example2() {
+export default function Example3() {
   const [frog, setFrog] = useState<Frog | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<unknown>(undefined)
