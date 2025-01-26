@@ -1,16 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
 
-/*
-  Pra resolver o problema de Cumulative Layout Shift (CLS), vamos rastrear o estado de loading e um pouco de CSS.
-'
-  Utilizando o estado de loading vamos exibir um skeleton enquanto não tiver finalizado a requisição.
-*/
-
-/*
-  Isso resolve o CLS, mas ainda deixa sem solução o outro problema.
-  Se a API der algum erro, ficaria um estado de loading infinito.
-*/
-
 interface Frog {
   name: string
   url: string
@@ -20,16 +9,28 @@ interface Frog {
 export default function Example2() {
   const [frog, setFrog] = useState<Frog | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<unknown>(undefined)
 
   const handleFetchRandomFrog = useCallback(async () => {
     setFrog(undefined)
     setLoading(true)
+    setError(undefined)
 
-    const res = await fetch(`http://localhost:8000/api/frogs/random`)
-    const frog = (await res.json()) as Frog
+    try {
+      const res = await fetch(`http://localhost:8000/api/frogs/random`)
 
-    setFrog(frog)
-    setLoading(false)
+      if (!res.ok) {
+        throw new Error(res.statusText)
+      }
+
+      const frog = (await res.json()) as Frog
+
+      setFrog(frog)
+    } catch (err) {
+      setError(err)
+    } finally {
+      setLoading(false)
+    }
   }, [])
 
   useEffect(() => {
@@ -42,10 +43,19 @@ export default function Example2() {
 
       <div className="mb-8 flex gap-8">
         {!loading ? (
-          <img
-            src={frog?.url}
-            className="h-[var(--frog-height)] w-[var(--frog-width)] overflow-hidden rounded-md object-center"
-          />
+          <figure>
+            <img
+              src={frog?.url}
+              className="h-[var(--frog-height)] w-[var(--frog-width)] overflow-hidden rounded-md object-center"
+            />
+
+            {!!error && (
+              <figcaption className="mt-2 text-center">
+                <h2 className="text-lg font-medium">oops!</h2>
+                <h3 className="text-sm">sorry, we could not find this frog...</h3>
+              </figcaption>
+            )}
+          </figure>
         ) : (
           <div className="h-[var(--frog-height)] w-[var(--frog-width)] animate-pulse rounded-md bg-neutral-100" />
         )}
