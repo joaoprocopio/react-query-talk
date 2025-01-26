@@ -13,6 +13,10 @@ const exampleLinks = [
     to: "/example-3",
     label: "Example 3",
   },
+  {
+    to: "/example-4",
+    label: "Example 4",
+  },
 ] satisfies { to: string; label: string }[]
 
 export default function Home() {
