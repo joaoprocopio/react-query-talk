@@ -3,7 +3,22 @@ import { useCallback, useEffect, useState } from "react"
 /*
   Agora dentro desse exemplo estamos rastreando os estados mais básicos dos dados da API — loading, erro e sucesso.
 
-  Já que nós sincronizamos o estado que representa o sapo
+  Já que nós sincronizamos o estado que representa o sapo toda vez que é dado um clique no botão,
+  tomamos para nós o que historicamente é a parte mais complexa de construir uma aplicação de qualquer tipo.
+
+  Um efeito colatera assíncrono (*async side effect*).
+  E fizemos isso de forma simples, escondemos esse detalhe da implementação com o clique de um botão.
+*/
+
+/*
+  Mas infelizmente ainda não estamos prontos, esse código todo esconde um grande bug.
+  Um bug do tipo que é quase imperceptível e enganosamente desperdiçador (parece legal mais causa gasto/prejuízo).
+
+  Você consegue notar?
+  Dica: O que acontece se antes da API responder a gente clicar no botão novamente?
+
+  > Se ninguém perceber, a resposta tá no final do arquivo.
+  > Na prática é um pouco mais obscuro do que parece.
 */
 
 interface Frog {
@@ -83,3 +98,40 @@ export default function Example3() {
     </div>
   )
 }
+
+/*
+  Espaçamento anti-cheat
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Fim do anti-cheat
+*/
+
+/*
+
+*/

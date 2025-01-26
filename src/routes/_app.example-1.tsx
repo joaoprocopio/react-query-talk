@@ -25,8 +25,7 @@ import { useCallback, useEffect, useState } from "react"
     3. Reaparecem
     4. E se reposicionam mais uma vez
 
-  Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
-  Ou aumentando o timeout artificialmente.
+  Dentro da API adicionamos um delay artificial pra facilitar a visualização do problema.
 */
 
 interface Frog {
