@@ -1,3 +1,3 @@
 export default function EmptyExample() {
-  return <h1 className="font-bold text-3xl">Please, select an example! 👆</h1>
+  return <h1 className="text-3xl font-bold">Please, select an example! 👆</h1>
 }

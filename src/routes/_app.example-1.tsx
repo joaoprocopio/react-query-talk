@@ -43,12 +43,12 @@ export default function Example1() {
 
   return (
     <div style={{ "--frog-width": "24rem" } as React.CSSProperties}>
-      <h1 className="font-bold text-3xl mb-4">{frog?.name}</h1>
+      <h1 className="mb-4 text-3xl font-bold">{frog?.name}</h1>
 
-      <div className="flex gap-8 mb-8">
+      <div className="mb-8 flex gap-8">
         <img
           src={frog?.url}
-          className="object-cover w-[var(--frog-width)] h-fit rounded-md overflow-hidden"
+          className="w-[var(--frog-width)] overflow-hidden rounded-md object-center"
         />
 
         {Array.isArray(frog?.aliases) && (
@@ -61,7 +61,7 @@ export default function Example1() {
       </div>
 
       <button
-        className="w-[var(--frog-width)] h-12 border rounded-md font-bold"
+        className="h-12 w-[var(--frog-width)] rounded-md border font-bold"
         onClick={handleFetchRandomFrog}>
         give me another frog
       </button>

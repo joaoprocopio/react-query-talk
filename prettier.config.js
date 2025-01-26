@@ -6,6 +6,7 @@ const config = {
   trailingComma: "all",
   printWidth: 100,
   quoteProps: "consistent",
+  plugins: ["prettier-plugin-tailwindcss"],
 }
 
 export default config
