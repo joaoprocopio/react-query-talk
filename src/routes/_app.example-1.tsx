@@ -76,4 +76,5 @@ export default function Example1() {
     4. E se reposicionam mais uma vez
 
   Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
+  Ou aumentando o timeout artificialmente.
 */

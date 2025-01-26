@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react"
 
 /*
   Pra resolver o problema de Cumulative Layout Shift (CLS), vamos rastrear o estado de loading e um pouco de CSS.
+
+  Utilizando o estado de loading vamos exibir um skeleton enquanto não tiver finalizado a requisição.
 */
 
 interface Frog {

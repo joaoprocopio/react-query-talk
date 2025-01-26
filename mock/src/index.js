@@ -3,12 +3,15 @@ const Url = require("node:url")
 const cors = require("@koa/cors")
 
 const { config } = require("./config")
-const { logger, loggerMiddleware } = require("./logger")
+const { logger } = require("./logger")
 const { router } = require("./router")
+
+const { loggerMiddleware, delayMiddleware } = require("./middleware")
 
 const app = new Koa()
 
 app
+  .use(delayMiddleware(400))
   .use(loggerMiddleware())
   .use(cors())
   .use(router.routes())

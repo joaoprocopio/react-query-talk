@@ -1,5 +1,4 @@
 const { pino, levels, stdTimeFunctions } = require("pino")
-const { pinoHttp } = require("pino-http")
 const { PinoPretty: pinoPretty } = require("pino-pretty")
 
 const stream = pinoPretty({
@@ -29,17 +28,6 @@ const stream = pinoPretty({
 
 const logger = pino({ timestamp: stdTimeFunctions.isoTime }, stream)
 
-const httpLogger = pinoHttp({ logger: logger })
-
-/** @type {import("koa").Middleware} */
-const loggerMiddleware = () => (ctx, next) => {
-  httpLogger(ctx.req, ctx.res)
-
-  return next()
-}
-
 module.exports = {
   logger,
-  loggerMiddleware,
-  levels,
 }

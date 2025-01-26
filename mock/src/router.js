@@ -1,7 +1,7 @@
 const Router = require("@koa/router")
 
 const { frogs } = require("./data")
-const { randomNumber } = require("./utils")
+const { randomNumber } = require("./util")
 
 const router = new Router()
 
