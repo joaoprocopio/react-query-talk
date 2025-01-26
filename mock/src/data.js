@@ -65,7 +65,7 @@ const frogs = [
   {
     name: "rainbow",
     url: "https://frogs.media/api/images/rainbow",
-    aliases: ["gay"],
+    aliases: ["arco-íro"],
   },
   {
     name: "orange",
