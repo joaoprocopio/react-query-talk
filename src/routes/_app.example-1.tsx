@@ -1,19 +1,24 @@
 import { useCallback, useEffect, useState } from "react"
 
-import * as FrogServices from "~/services/frog"
-
 /*
   O mais próximo que a gente consegue chegar de consumir dados da API utilizando os hooks built-in do React
   é usando `useEffect` para realizar a chamada, e guardar os dados em um `useState`.
 */
 
+interface Frog {
+  name: string
+  url: string
+  aliases?: string[]
+}
+
 export default function Example1() {
-  const [frog, setFrog] = useState<FrogServices.Frog | undefined>(undefined)
+  const [frog, setFrog] = useState<Frog | undefined>(undefined)
 
   const handleFetchRandomFrog = useCallback(async () => {
     setFrog(undefined)
 
-    const frog = await FrogServices.getRandomFrog()
+    const res = await fetch(`http://localhost:8000/api/frogs/random`)
+    const frog = (await res.json()) as Frog
 
     setFrog(frog)
   }, [])
@@ -59,16 +64,16 @@ export default function Example1() {
 
 /*
   Vendo esse código já podemos reparar em dois problemas existentes:
-  - tela de loading infinito.
-    caso aconteça algum erro na api, vai ficar um estado de loading infinito.
+  - Tela de loading infinito
+    Caso aconteça algum erro na API, a UI vai ficar travada indeterminadamente.
 
-  - cumulative layout shift.
-    falta rastrear o estado de loading e por isso temos pouca estabilidade visual.
-    toda vez que ocorre uma troca de sapo, os elementos:
-    - somem
-    - se reposicionam
-    - reaparecem
-    - e se reposicionam mais uma vez
+  - Cumulative Layout Shift (CLS)
+    Temos pouca estabilidade visual.
+    Toda vez que ocorre uma troca de sapo, os elementos:
+    1. Somem
+    2. Se reposicionam
+    3. Reaparecem
+    4. E se reposicionam mais uma vez
 
   Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
 */

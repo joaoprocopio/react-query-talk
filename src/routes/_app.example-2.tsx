@@ -1,20 +1,25 @@
 import { useCallback, useEffect, useState } from "react"
 
-import * as FrogServices from "~/services/frog"
-
 /*
-  Pra resolver esses
+  Pra resolver o problema de Cumulative Layout Shift (CLS), vamos rastrear o estado de loading e um pouco de CSS.
 */
 
+interface Frog {
+  name: string
+  url: string
+  aliases?: string[]
+}
+
 export default function Example2() {
-  const [frog, setFrog] = useState<FrogServices.Frog | undefined>(undefined)
+  const [frog, setFrog] = useState<Frog | undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(true)
 
   const handleFetchRandomFrog = useCallback(async () => {
     setFrog(undefined)
     setLoading(true)
 
-    const frog = await FrogServices.getRandomFrog()
+    const res = await fetch(`http://localhost:8000/api/frogs/random`)
+    const frog = (await res.json()) as Frog
 
     setFrog(frog)
     setLoading(false)
