@@ -5,6 +5,30 @@ import { useCallback, useEffect, useState } from "react"
   é usando `useEffect` para realizar a chamada, e guardar os dados em um `useState`.
 */
 
+/*
+  Provalvemente você já viu e/ou escreveu muito código assim.
+  Mas o problema aqui é que isso é código "nível-tutorial".
+
+  E nós não deveríamos jogar código de "nível-tutorial" para produção.
+*/
+
+/*
+  Vendo esse código já podemos reparar em dois problemas existentes:
+  - Tela de loading infinito
+    Caso aconteça algum erro na API, a UI vai ficar travada indeterminadamente.
+
+  - Cumulative Layout Shift (CLS)
+    Temos pouca estabilidade visual.
+    Toda vez que ocorre uma troca de sapo, os elementos:
+    1. Somem
+    2. Se reposicionam
+    3. Reaparecem
+    4. E se reposicionam mais uma vez
+
+  Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
+  Ou aumentando o timeout artificialmente.
+*/
+
 interface Frog {
   name: string
   url: string
@@ -54,27 +78,3 @@ export default function Example1() {
     </div>
   )
 }
-
-/*
-  Provalvemente você já viu e/ou escreveu muito código assim.
-  Mas o problema aqui é que isso é código "nível-tutorial".
-
-  E nós não deveríamos jogar código de "nível-tutorial" para produção.
-*/
-
-/*
-  Vendo esse código já podemos reparar em dois problemas existentes:
-  - Tela de loading infinito
-    Caso aconteça algum erro na API, a UI vai ficar travada indeterminadamente.
-
-  - Cumulative Layout Shift (CLS)
-    Temos pouca estabilidade visual.
-    Toda vez que ocorre uma troca de sapo, os elementos:
-    1. Somem
-    2. Se reposicionam
-    3. Reaparecem
-    4. E se reposicionam mais uma vez
-
-  Esses problemas ficam mais claros, se fazer um *throttle* na rede e **desabilitar o cache**.
-  Ou aumentando o timeout artificialmente.
-*/

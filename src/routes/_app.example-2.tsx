@@ -6,6 +6,11 @@ import { useCallback, useEffect, useState } from "react"
   Utilizando o estado de loading vamos exibir um skeleton enquanto não tiver finalizado a requisição.
 */
 
+/*
+  Isso resolve o CLS, mas ainda deixa sem solução o outro problema.
+  Se a API der algum erro, ficaria um estado de loading infinito.
+*/
+
 interface Frog {
   name: string
   url: string
