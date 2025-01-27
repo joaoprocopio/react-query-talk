@@ -1,5 +1,42 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
+import { Link, Outlet } from "react-router"
+
+export default function Example5() {
+  const frogsQuery = useQuery({
+    queryKey: ["frogs"],
+    queryFn: (args) => listFrogs({ signal: args.signal }),
+  })
+
+  if (frogsQuery.isLoading) {
+    return "Loading..."
+  }
+
+  if (frogsQuery.isError) {
+    return "Errored"
+  }
+
+  return (
+    <div className="grid h-[calc(100vh-64px-48px*2)] grid-cols-[16rem_1fr] overflow-hidden">
+      <div className="flex flex-col gap-4 overflow-y-scroll">
+        <div className="sticky top-0 flex border-b bg-white py-4">
+          <button className="mx-8 w-full rounded-md border py-2"> add frog </button>
+        </div>
+
+        {frogsQuery.data!.map((frog) => (
+          <Link
+            key={frog.name}
+            className="mx-8 rounded-md border py-2 text-center"
+            to={`./${frog.name}`}>
+            {frog.name}
+          </Link>
+        ))}
+      </div>
+
+      <Outlet />
+    </div>
+  )
+}
 
 interface Frog {
   name: string
@@ -16,94 +53,3 @@ async function listFrogs({ signal }: { signal?: AbortSignal }): Promise<Array<Fr
 
   return (await res.json()) as Array<Frog>
 }
-
-async function getFrog({ frog, signal }: { frog: string; signal?: AbortSignal }): Promise<Frog> {
-  const res = await fetch(`http://localhost:8000/api/frogs/${frog}`, { signal })
-
-  if (!res.ok) {
-    throw new Error(res.statusText)
-  }
-
-  return (await res.json()) as Frog
-}
-
-export default function Example5() {
-  const [selectedFrog, setSelectedFrog] = useState<string | undefined>(undefined)
-
-  const frogsQuery = useQuery({
-    queryKey: ["frogs"],
-    queryFn: (args) => listFrogs({ signal: args.signal }),
-  })
-
-  if (frogsQuery.isLoading) {
-    return "Loading..."
-  }
-
-  if (frogsQuery.isError) {
-    return "Errored"
-  }
-
-  return (
-    <div className="grid h-[calc(100vh-64px-48px*2)] grid-cols-[16rem_1fr] overflow-hidden">
-      <div className="flex flex-col gap-4 overflow-y-scroll px-8">
-        {frogsQuery.data!.map((frog) => (
-          <button
-            key={frog.name}
-            className="cursor-pointer rounded-md border py-2"
-            onClick={() => setSelectedFrog(frog.name)}>
-            {frog.name}
-          </button>
-        ))}
-      </div>
-
-      <Froggy selectedFrog={selectedFrog} />
-    </div>
-  )
-}
-
-function Froggy({ selectedFrog }: { selectedFrog?: string }) {
-  const frogQuery = useQuery({
-    // Como o React Query é um gerenciador de estado, nós podemos acessar o estado de outras queries
-    queryKey: ["frogs"],
-    queryFn: (args) => listFrogs({ signal: args.signal }),
-    // O select vai ser re-executado toda vez que a referência da função mudar, logo você não deve passar () => ... diretamente
-    // Ou quando os argumentos da função mudam.
-    select: findFrogByName(selectedFrog!),
-    enabled: !!selectedFrog,
-  })
-
-  // Mas você também pode fazer o fetch diretamente usando
-  // const frogQuery = useQuery({
-  //   queryKey: ["frogs", selectedFrog],
-  //   queryFn: (args) => getFrog({ frog: selectedFrog!, signal: args.signal }),
-  //   enabled: !!selectedFrog,
-  // })
-
-  if (frogQuery.isLoading) {
-    return <div className="px-8">Loading...</div>
-  }
-
-  if (frogQuery.isError) {
-    return <div className="px-8">Errored</div>
-  }
-
-  return (
-    <div className="px-8">
-      <img
-        src={frogQuery.data?.url}
-        className={"h-96 w-full overflow-hidden rounded-md object-center [&:not([src])]:hidden"}
-      />
-
-      {Array.isArray(frogQuery.data?.aliases) && (
-        <ul className="mt-4 list-inside list-disc">
-          {frogQuery.data.aliases.map((alias) => (
-            <li key={alias}>{alias}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
-}
-
-const findFrogByName = (selectedFrog: string) => (frogs: Frog[]) =>
-  frogs.find((frog) => frog.name === selectedFrog)
