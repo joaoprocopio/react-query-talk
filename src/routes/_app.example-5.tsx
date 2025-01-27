@@ -48,6 +48,7 @@ export default function Example5() {
       <div className="flex flex-col gap-4 overflow-y-scroll px-8">
         {frogsQuery.data!.map((frog) => (
           <button
+            key={frog.name}
             className="cursor-pointer rounded-md border py-2"
             onClick={() => setSelectedFrog(frog.name)}>
             {frog.name}
@@ -62,6 +63,7 @@ export default function Example5() {
 
 function Froggy({ selectedFrog }: { selectedFrog?: string }) {
   const frogQuery = useQuery({
+    // Como o React Query é um gerenciador de estado, nós podemos acessar o estado de outras queries
     queryKey: ["frogs"],
     queryFn: (args) => listFrogs({ signal: args.signal }),
     // O select vai ser re-executado toda vez que a referência da função mudar, logo você não deve passar () => ... diretamente
@@ -70,7 +72,7 @@ function Froggy({ selectedFrog }: { selectedFrog?: string }) {
     enabled: !!selectedFrog,
   })
 
-  // Mas você também pode fazer o tech diretamente usando
+  // Mas você também pode fazer o fetch diretamente usando
   // const frogQuery = useQuery({
   //   queryKey: ["frogs", selectedFrog],
   //   queryFn: (args) => getFrog({ frog: selectedFrog!, signal: args.signal }),
@@ -89,11 +91,11 @@ function Froggy({ selectedFrog }: { selectedFrog?: string }) {
     <div className="px-8">
       <img
         src={frogQuery.data?.url}
-        className="mb-4 h-96 w-full overflow-hidden rounded-md object-center"
+        className={"h-96 w-full overflow-hidden rounded-md object-center [&:not([src])]:hidden"}
       />
 
       {Array.isArray(frogQuery.data?.aliases) && (
-        <ul className="list-inside list-disc">
+        <ul className="mt-4 list-inside list-disc">
           {frogQuery.data.aliases.map((alias) => (
             <li key={alias}>{alias}</li>
           ))}
