@@ -30,7 +30,7 @@ export default function DynamicFrog() {
   }
 
   return (
-    <div className="px-8">
+    <>
       <img
         src={frogQuery.data?.url}
         className={"h-96 w-full overflow-hidden rounded-md object-center [&:not([src])]:hidden"}
@@ -43,7 +43,7 @@ export default function DynamicFrog() {
           ))}
         </ul>
       )}
-    </div>
+    </>
   )
 }
 

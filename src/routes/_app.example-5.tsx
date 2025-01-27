@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
 import { Link, Outlet } from "react-router"
 
 export default function Example5() {
@@ -20,7 +19,9 @@ export default function Example5() {
     <div className="grid h-[calc(100vh-64px-48px*2)] grid-cols-[16rem_1fr] overflow-hidden">
       <div className="flex flex-col gap-4 overflow-y-scroll">
         <div className="sticky top-0 flex border-b bg-white py-4">
-          <button className="mx-8 w-full rounded-md border py-2"> add frog </button>
+          <Link className="mx-8 w-full rounded-md border py-2 text-center" to="./create">
+            add frog
+          </Link>
         </div>
 
         {frogsQuery.data!.map((frog) => (
@@ -33,7 +34,9 @@ export default function Example5() {
         ))}
       </div>
 
-      <Outlet />
+      <div className="px-8">
+        <Outlet />
+      </div>
     </div>
   )
 }

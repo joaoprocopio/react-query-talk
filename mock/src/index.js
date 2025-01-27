@@ -1,6 +1,7 @@
 const Koa = require("koa")
 const Url = require("node:url")
 const cors = require("@koa/cors")
+const { bodyParser } = require("@koa/bodyparser")
 
 const { config } = require("./config")
 const { logger } = require("./logger")
@@ -14,6 +15,7 @@ app
   .use(delayMiddleware(400))
   .use(loggerMiddleware())
   .use(cors())
+  .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(config.port, config.host, () => {

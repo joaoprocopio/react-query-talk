@@ -8,6 +8,7 @@
     "dev": "node --watch src/index.js"
   },
   "dependencies": {
+    "@koa/bodyparser": "^5.1.1",
     "@koa/router": "^13.1.0",
     "koa": "^2.15.3",
     "pino": "^9.6.0",
